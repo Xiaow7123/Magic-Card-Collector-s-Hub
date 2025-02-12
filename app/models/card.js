@@ -36,3 +36,5 @@ class Card {
         return this.image_urls && this.image_uris[size] ? this.image_uris[size] : "No image available";
     }
 }
+
+export default Card;

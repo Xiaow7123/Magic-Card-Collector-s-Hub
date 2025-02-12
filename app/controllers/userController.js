@@ -36,7 +36,7 @@ export const getUser = async (req, res) => {
 };
 
 //update a user by username 
-exports.updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
     try {
         // updates is an array of the keys in the request body
         const updates = Object.keys(req.body);
@@ -70,7 +70,7 @@ exports.updateUser = async (req, res) => {
 };
 
 // Delete a user by username
-exports.deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
         try {
             const user = await User.findByUsername(req.params.username);
             if (!user) {
@@ -80,6 +80,6 @@ exports.deleteUser = async (req, res) => {
             await User.deleteUser(req.params.username);
             res.send({ message: 'User deleted successfully' });
         } catch (error) {
-            res.status(500).send(error: error.message);
+            res.status(500).send({ error: error.message });
         }
     };
