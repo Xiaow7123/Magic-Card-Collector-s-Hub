@@ -1,18 +1,16 @@
 import { MongoClient } from 'mongodb';
-
-// Configuration
-const url = 'mongodb://localhost:27017'; // MongoDB server URL
-const dbName = 'magicCardDB'; // Database name
+import { config } from '../config/config.js';
 
 let db = null;
+let client = null;
 
 // Connect to MongoDB
-async function connect() {
+async function connectDB() {
     if (db) return db;  // Return existing db instance if already connected
     try {
-        const client = await MongoClient.connect(url, { useUnifiedTopology: true });
-        db = client.db(dbName);
-        console.log("Connected to MongoDB:", dbName);
+        const client = await MongoClient.connect(config.mongodb.uri);
+        db = client.db(config.mongodb.dbName);
+        //console.log("Connected to MongoDB:", dbName);
         return db;
     } catch (error) {
         console.error("Could not connect to MongoDB:", error);
@@ -20,12 +18,19 @@ async function connect() {
     }
 }
 
-// Get database instance
-function getDb() {
-    if (!db) {
-        throw new Error('Database not initialized. Call connect first!');
-    }
-    return db;
-}
 
-export { connect, getDb };
+export async function closeDB() {
+    if (client) {
+        await client.close();
+        db = null;
+        client = null;
+        // console.log("Database connection closed");}
+}}
+
+const dbConnection = {
+    connectDB,
+    closeDB,
+  };
+  
+export default dbConnection;
+  

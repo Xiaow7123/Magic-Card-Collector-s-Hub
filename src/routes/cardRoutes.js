@@ -1,34 +1,40 @@
 //import required modules
 import express from 'express';
-const router = express.Router();
-import { getDb } from '../db/mongo';
-
+import { connectDB } from '../db/mongo';
+//import { config } from '../config/config';
+import { closeDB } from '../db/mongo';
+import { ObjectId } from 'mongodb'; 
 //write API endpoints 
 // create a new card 
 
+const router = express.Router();
 
 // POST /cards - Create a new card
 router.post('/', async (req, res) => {
     const { name, rarity, type } = req.body;
-    const db = getDb();
+    const db = await connectDB();
     try {
       const collection = db.collection('cards');
       const result = await collection.insertOne({ name, rarity, type });
       res.status(201).json(result.ops[0]);
     } catch (error) {
       res.status(500).json({ message: 'Failed to add the card', error: error });
+    } finally {
+      await closeDB();
     }
   });
 
   // GET /cards - Retrieve all cards
 router.get('/', async (req, res) => {
-    const db = getDb();
+    const db = connectDB();
     try {
       const collection = db.collection('cards');
       const cards = await collection.find({}).toArray();
       res.status(200).json(cards);
     } catch (error) {
       res.status(500).json({ message: 'Failed to retrieve cards', error: error });
+    } finally {
+      await closeDB();
     }
   });
   
@@ -36,7 +42,7 @@ router.get('/', async (req, res) => {
   router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { name, rarity, type } = req.body;
-    const db = getDb();
+    const db = await connectDB();
     try {
       const collection = db.collection('cards');
       const result = await collection.updateOne(
@@ -50,13 +56,15 @@ router.get('/', async (req, res) => {
       }
     } catch (error) {
       res.status(500).json({ message: 'Failed to update the card', error: error });
+    } finally {
+      await closeDB();
     }
   });
   
   // DELETE /cards/:id - Delete a specific card
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
-    const db = getDb();
+    const db = connectDB();
     try {
       const collection = db.collection('cards');
       const result = await collection.deleteOne({ _id: new ObjectId(id) });
@@ -67,6 +75,8 @@ router.delete('/:id', async (req, res) => {
       }
     } catch (error) {
       res.status(500).json({ message: 'Failed to delete the card', error: error });
+    } finally {
+      await closeDB();
     }
   });
   

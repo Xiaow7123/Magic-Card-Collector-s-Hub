@@ -1,6 +1,5 @@
 // this file is the frontend of the application, it is responsible for handling the user interface and sending requests to the backend
-const BASE_URL = 'http://localhost:3000/cards';
-import webpack from 'webpack';
+const BASE_URL = 'http://127.0.0.1:3000/api/cards';
 
 // This function is called when the DOM is fully loaded
 // It adds an event listener to the form submission, which sends a POST request to the backend to add a new card
