@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magic Card Collection</title>
+<link rel="stylesheet" href="/Magic-Card-Collector-s-Hub/frontend/css/styles.css">
+<script src="/Magic-Card-Collector-s-Hub/frontend/app.js" defer></script>
+</head>
+<body>
+
+<div class="header">
+  <h1>Magic Card Collection</h1>
+</div>
+
+<div class="container">
+  <div class="add-card">
+    <h2>Add New Card</h2>
+    <form id = "addCardForm">
+      <input id="cardName" type="text" placeholder="Enter card name" required>
+      <select id="cardRarity" required>
+        <option value="">Select Rarity</option>
+        <option value="common">Common</option>
+        <option value="uncommon">Uncommon</option>
+        <option value="rare">Rare</option>
+        <option value="mythic">Mythic</option>
+      </select>
+      <select id="cardType" required>
+        <option value="">Select Type</option>
+        <option value="creature">Creature</option>
+        <option value="spell">Spell</option>
+        <option value="artifact">Artifact</option>
+      </select>
+      <button type="submit">Add Card</button>
+    </form>
+  </div>
+
+  <div class="card-list">
+    <h2>My Cards</h2>
+    <table id="cardsTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Rarity</th>
+          <th>Type</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamic rows will be inserted here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>
