@@ -1,6 +1,6 @@
 // this file is the frontend of the application, it is responsible for handling the user interface and sending requests to the backend
 const BASE_URL = 'http://localhost:3000/cards';
-
+import webpack from 'webpack';
 
 // This function is called when the DOM is fully loaded
 // It adds an event listener to the form submission, which sends a POST request to the backend to add a new card
@@ -81,3 +81,4 @@ function deleteCard(cardId, row) {
     console.error('Error:', error);
   });
 }
+
