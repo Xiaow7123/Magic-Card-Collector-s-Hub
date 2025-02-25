@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
 });
 
 // Use cardRoutes for all card-related API endpoints
-app.use('/api/cards', cardRoutes);
+app.use(cardRoutes);
 
 // Start the server
 app.listen(PORT, () => {
