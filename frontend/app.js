@@ -24,6 +24,7 @@ const BASE_URL = window.location.hostname.includes('localhost')
       .then(card => {
         addCardToTable(card);
         form.reset(); // Reset form after successful submission
+        loadCards(); // Reload cards from the server
       })
       .catch(error => console.error('Error adding card:', error));
     });
