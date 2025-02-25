@@ -12,6 +12,7 @@ import { fileURLToPath } from "url";
 import path from "path";
 import process from 'process';
 import cors from 'cors';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -25,22 +26,24 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
   // Set the port
-const PORT = process.env.PORT || 3000; 
 
 app.use(express.json()); // Used to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Used to parse URL-encoded bodies
-app.use(express.static(path.join(__dirname, "frontend")));
 
 // Connect to database
 dbConnection.connectDB().catch(console.error);
+
+// Use cardRoutes for all card-related API endpoints
+app.use('/api',cardRoutes);
+
+app.use(express.static(path.join(__dirname, "frontend")));
 
 // Serve index.html
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "index.html"));
 });
 
-// Use cardRoutes for all card-related API endpoints
-app.use('/api',cardRoutes);
+const PORT = process.env.PORT || 3000; 
 
 // Start the server
 app.listen(PORT, () => {
