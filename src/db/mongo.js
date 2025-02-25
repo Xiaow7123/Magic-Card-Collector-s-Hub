@@ -1,15 +1,25 @@
-import { MongoClient } from 'mongodb';
 import { config } from '../config/config.js';
+import { MongoClient } from 'mongodb';
 
-let db = null;
-let client = null;
+let client;  // This will hold the MongoDB client instance
+let db;     // This will hold the database connection
 
-// Connect to MongoDB
 export async function connectDB() {
-    if (db) return db;
-    try {  // Return existing db instance if already connected
-        console.log("Attempting to connect to MongoDB");
-        client = await MongoClient.connect(config.mongodb.uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    if (db) {
+        return db;
+    }
+
+    try {
+        console.log("Attempting to connect to MongoDB", config.mongodb.url);
+        if (!config.mongodb.url) {
+            throw new Error("MongoDB URL is not defined in the config.");
+        }
+        client = new MongoClient(config.mongodb.url);  
+        // Ensure URL is correctly loaded
+
+
+
+        await client.connect();
         db = client.db(config.mongodb.dbName);
         console.log("Connected to MongoDB:", config.mongodb.dbName);
         return db;
@@ -19,14 +29,13 @@ export async function connectDB() {
     }
 }
 
-
-
 export async function closeDB() {
     if (client) {
         await client.close();
+        console.log("Database connection closed");
         db = null;
         client = null;
-        console.log("Database connection closed");}
+    }
 }
 
 const dbConnection = {

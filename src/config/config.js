@@ -1,7 +1,10 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 export const config = {
     mongodb: {
-      uri: process.env.MONGODB_URI || "mongodb://localhost:27017",
-      dbName: process.env.DB_NAME || "MagicCardCollection",
+      url: process.env.MONGODB_URL,
+      dbName: process.env.DB_NAME,
     },
   };
-  
+

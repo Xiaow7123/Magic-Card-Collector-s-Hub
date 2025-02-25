@@ -1,54 +1,48 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+console.log('MongoDB URL:', process.env.MONGODB_URL);
+console.log('Database Name:', process.env.DB_NAME);
+
 import express from 'express';
-//import bodyParser from 'body-parser';
-import dbConnection from './src/db/mongo';  
-import process from 'node:process';
-import cardRoutes from './src/routes/cardRoutes';
-import cors from 'cors';
+import dbConnection from './src/db/mongo.js';  
+import cardRoutes from './src/routes/cardRoutes.js';
 import { fileURLToPath } from "url";
 import path from "path";
-
+import process from 'process';
+import cors from 'cors';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Create Express app
 const app = express();
-// Set the port
+//require cors
+const corsOptions = {
+  origin: 'http://127.0.0.1:3001',
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+  // Set the port
 const PORT = process.env.PORT || 3000; 
 
-app.use(cors({ 
-  origin: 'http://127.0.0.1:3000',
-}));
-
-
-// Middleware
-app.use("/api", express.json());
+app.use(express.json()); // Used to parse JSON bodies
+app.use(express.urlencoded({ extended: true })); // Used to parse URL-encoded bodies
 app.use(express.static(path.join(__dirname, "frontend")));
 
-
-// Use cardRoutes for all card-related API endpoints
-app.use('/api/cards', cardRoutes);
+// Connect to database
+dbConnection.connectDB().catch(console.error);
 
 // Serve index.html
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "index.html"));
 });
 
-app.use((req, res) => {
-  res.status(404).json({ message: "Route not found" });
-});
-
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: "Internal Server Error" });
-});
-
-// Connect to database
-dbConnection.connectDB().catch(console.error);
+// Use cardRoutes for all card-related API endpoints
+app.use('/api/cards', cardRoutes);
 
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
-
-export default app;
