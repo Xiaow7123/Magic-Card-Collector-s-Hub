@@ -55,13 +55,13 @@ router.get('/list', async (req, res) => {
 router.delete('/delete/:id', async (req, res) => {
     const { id } = req.params;
     try {
-      const db = connectDB();
+      const db = await connectDB();
       const collection = db.collection('cards');
       const result = await collection.deleteOne({ _id: new ObjectId(id) });
       if (result.deletedCount === 0) {
-        res.status(200).json({ message: 'Card deleted successfully' });
-      } else {
         res.status(404).json({ message: 'Card not found' });
+      } else {
+        res.status(200).json({ message: 'Card deleted successfully' });
       }
     } catch (error) {
       res.status(500).json({ message: 'Failed to delete the card', error: error });
