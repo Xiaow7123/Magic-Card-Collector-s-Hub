@@ -20,7 +20,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 //require cors
 const corsOptions = {
-  origin: 'http://127.0.0.1:3001',
+  origin: '*',
   optionsSuccessStatus: 200
 };
 
