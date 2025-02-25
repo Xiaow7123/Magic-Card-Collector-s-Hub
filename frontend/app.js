@@ -15,7 +15,7 @@ const BASE_URL = window.location.hostname.includes('localhost')
   
       const cardData = { name, rarity, type };
   
-      fetch(`${BASE_URL}/cards`, {
+      fetch(`${BASE_URL}/api/cards`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(cardData)
@@ -41,7 +41,7 @@ const BASE_URL = window.location.hostname.includes('localhost')
     }
   
     function deleteCard(id, row) {
-      fetch(`${BASE_URL}/cards/${id}`, {
+      fetch(`${BASE_URL}/api/cards/${id}`, {
         method: 'DELETE'
       })
       .then(response => {
@@ -56,7 +56,7 @@ const BASE_URL = window.location.hostname.includes('localhost')
   
     // Load existing cards from the server
     function loadCards() {
-      fetch(`${BASE_URL}/cards`)
+      fetch(`${BASE_URL}/api/cards`)
       .then(response => response.json())
       .then(cards => cards.forEach(card => addCardToTable(card)))
       .catch(error => console.error('Error loading cards:', error));
