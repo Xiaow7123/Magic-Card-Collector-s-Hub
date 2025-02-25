@@ -18,7 +18,7 @@ const cardSchema = Joi.object({
 
 
 // POST /cards - Create a new card
-router.post('/', async (req, res) => {
+router.post('/create', async (req, res) => {
   const { error, value } = cardSchema.validate(req.body);
   if (error) {
     return res.status(400).json({ message: 'Validation failed', details: error.details.map(x => x.message) });
@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
 
 
   // GET /cards - Retrieve all cards
-router.get('/', async (req, res) => {
+router.get('/list', async (req, res) => {
     try {
       const db = await connectDB();
       const collection = db.collection('cards');
@@ -52,7 +52,7 @@ router.get('/', async (req, res) => {
   
   
   // DELETE /cards/:id - Delete a specific card
-router.delete('/:id', async (req, res) => {
+router.delete('/delete:id', async (req, res) => {
     const { id } = req.params;
     try {
       const db = connectDB();
