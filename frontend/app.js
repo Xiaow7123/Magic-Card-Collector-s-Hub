@@ -24,7 +24,6 @@ const BASE_URL = window.location.hostname.includes('localhost')
       .then(card => {
         addCardToTable(card);
         form.reset(); // Reset form after successful submission
-        loadCards(); // Reload cards from the server
       })
       .catch(error => console.error('Error adding card:', error));
     });
@@ -34,6 +33,7 @@ const BASE_URL = window.location.hostname.includes('localhost')
       row.insertCell(0).textContent = card.name;
       row.insertCell(1).textContent = card.rarity;
       row.insertCell(2).textContent = card.type;
+      
       const deleteCell = row.insertCell(3);
       const deleteButton = document.createElement('button');
       deleteButton.textContent = 'Delete';
