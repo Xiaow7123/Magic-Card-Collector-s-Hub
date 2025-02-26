@@ -8,7 +8,7 @@ website Link: https://magic-card-collector-s-hub.vercel.app/
 
 Slides: https://docs.google.com/presentation/d/1mZgXIZpmyN8HNmpBNdzq-Y6mipvIpbRGJWsGrTUPpPA/edit?usp=sharing
 
-Video: 
+Video: https://docs.google.com/presentation/d/1mZgXIZpmyN8HNmpBNdzq-Y6mipvIpbRGJWsGrTUPpPA/edit?usp=sharing
 
 ## Features
 - **Add Card**: Users can add new cards to their collection with details such as name, rarity, and type.
