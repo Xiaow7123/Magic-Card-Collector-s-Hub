@@ -30,7 +30,8 @@ router.post('/create', async (req, res) => {
     if (!result.insertedId) {
       throw new Error('Insert failed');
     }
-    res.status(201).json(result.ops[0]);
+    const newCard = await collection.findOne({ _id: result.insertedId });
+    res.status(201).json(newCard);
   } catch (error) {
     res.status(500).json({ message: 'Failed to add the card', error: error.toString() });
   }

@@ -5,6 +5,7 @@ const BASE_URL = window.location.hostname.includes('localhost')
 
   document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('addCardForm');
+    
     const cardsTable = document.getElementById('cardsTable').getElementsByTagName('tbody')[0];
   
     form.addEventListener('submit', function(event) {
@@ -21,8 +22,8 @@ const BASE_URL = window.location.hostname.includes('localhost')
         body: JSON.stringify(cardData)
       })
       .then(response => response.json())
-      .then(card => {
-        addCardToTable(card);
+      .then(newCard => {
+        addCardToTable(newCard);
         form.reset(); // Reset form after successful submission
       })
       .catch(error => console.error('Error adding card:', error));
